@@ -4,7 +4,7 @@ document.getElementById("userForm").addEventListener("submit", function(event) {
   event.preventDefault(); // чтобы страница не перезагружалась
 
   const name = document.getElementById("name").value.trim();
-  const age = Number(document.getElementById("age").value);
+  const age = document.getElementById("age").value;
   const result = document.getElementById("result");
 
   if (name === "") {
@@ -19,7 +19,9 @@ document.getElementById("userForm").addEventListener("submit", function(event) {
     return;
   }
 
-  if (age === "" || isNaN(age) || age <= 0) {
+  const ageNumber = Number(age);
+
+  if (ageNumber === "" || isNaN(ageNumber) || ageNumber <= 0) {
     result.textContent = "Ошибка: возраст должен быть числом больше 0";
   } else if (ageNumber <= 65) {
     result.textContent = `Привет, ${name}! Доступ разрешен`;
