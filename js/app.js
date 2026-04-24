@@ -1,6 +1,5 @@
 let todos = [];
 
-// загрузка при старте
 loadTodos();
 
 document.getElementById("addBtn").addEventListener("click", addTodo);
@@ -40,12 +39,26 @@ function renderTodos() {
       li.classList.add("done");
     }
 
-    li.innerHTML = `
-            <strong>${todo.title}</strong><br>
-            <small>${todo.description}</small><br>
-            <button onclick="toggleDone(${todo.id})">✔</button>
-            <button onclick="deleteTodo(${todo.id})">❌</button>
-        `;
+    const title = document.createElement("strong");
+    title.textContent = todo.title;
+
+    const desc = document.createElement("small");
+    desc.textContent = todo.description;
+
+    const doneBtn = document.createElement("button");
+    doneBtn.textContent = "✔";
+    doneBtn.addEventListener("click", () => toggleDone(todo.id));
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "❌";
+    deleteBtn.addEventListener("click", () => deleteTodo(todo.id));
+
+    li.appendChild(title);
+    li.appendChild(document.createElement("br"));
+    li.appendChild(desc);
+    li.appendChild(document.createElement("br"));
+    li.appendChild(doneBtn);
+    li.appendChild(deleteBtn);
 
     list.appendChild(li);
   });
@@ -70,7 +83,6 @@ function deleteTodo(id) {
   renderTodos();
 }
 
-// localStorage
 
 function saveTodos() {
   localStorage.setItem("todos", JSON.stringify(todos));
